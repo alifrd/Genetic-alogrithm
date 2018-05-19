@@ -37,3 +37,32 @@ function ChormoseBuilder(chrom_num,gen_num,min,max){
 				Chermosmes[i].addgen(getRandom(-10,10));	
 	}
 }
+
+
+
+//build random factor
+function SetRandomFactor(num,min,max){
+	for (var i = 0; i < num; i++)
+		GetFactor(getRandom(min,max));
+}
+
+// set factor
+function GetFactor(fac){
+	Factor.push(fac);
+}
+
+
+function CalucateFitness(){
+	var sum_fitness=0;
+	for (var i = 0; i < Chermosmes.length; i++) {
+		sum_fitness = 0;
+		for (var j = 0; j < Factor.length; j++)
+			sum_fitness += Chermosmes[i].gens[j]*Factor[j];
+		Chermosmes[i].fitness = sum_fitness;
+		if (Math.abs(sum_fitness) < Math.abs(Best.fitness)  ) {
+			Best.fitness = sum_fitness;
+			Best.gen = Chermosmes[i].gens.slice(0);
+		} 
+	}		
+}
+
