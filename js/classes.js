@@ -101,3 +101,43 @@ function Elitism(percentage){
 }
 
 
+function CheckUnmark(){
+	for (var i = 0; i < Chermosmes.length; i++)
+			Chermosmes[i].check = 0;
+}
+
+function CheckMark(genetaration,chorm){
+
+	for (var i = 0; i < genetaration.length; i++)
+		if (genetaration[i].gens ===chorm.gens)
+			genetaration[i].check = 1;
+			
+	return genetaration
+	
+}
+
+function SelectionTournament(slice){
+	var lastgeretion = Generation.length;
+	var sliced = [];
+	for (var i = 0 , j=1 ; i < Generation[lastgeretion-1].length; i++) {
+		
+		if (j>slice) {
+			var sortedsliced=SortbyFitness(sliced);
+			slected_by_tournent.push(sortedsliced[0]);	
+			sliced = [];
+			j=1;
+		}
+		sliced.push(Generation[lastgeretion-1][i]);
+		j++;
+	}
+	var sortedsliced=SortbyFitness(sliced);
+	slected_by_tournent.push(sortedsliced[0]);
+	updated_generation=CheckMark(Generation[lastgeretion-1],sortedsliced[0])
+	Generation[lastgeretion-1]=updated_generation;
+		
+		
+}
+
+
+
+
