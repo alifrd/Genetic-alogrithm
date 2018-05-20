@@ -66,3 +66,38 @@ function CalucateFitness(){
 	}		
 }
 
+
+function GenerationBuild(){
+	Generation.push(Chermosmes);
+	
+	Clear();
+}
+
+function Clear(){
+	Chermosmes=[];
+	choosen=[];
+}
+
+function SortbyFitness(Cherom){
+	Cherom.sort(function(obj1, obj2) {
+		// Ascending: first age less than the previous
+		return Math.abs(obj1.fitness) - Math.abs(obj2.fitness);
+	});
+	return Cherom;
+}
+
+function Elitism(percentage){
+	var selected_size = Math.floor(Generation[Generation.length -1].length*(percentage/100));
+	console.log(selected_size);
+	var lastgeretion = Generation.length;
+	var lastchrom=Generation[lastgeretion-1].slice(0);
+	var sortedchrom=SortbyFitness(lastchrom);
+	var updated_generation
+	for (var i = 0 ; i < selected_size ; i++) {
+		Chermosmes.push(sortedchrom[i]);
+		updated_generation=CheckMark(Generation[lastgeretion-1],sortedchrom[i])
+		Generation[lastgeretion-1]=updated_generation;
+	}
+}
+
+
