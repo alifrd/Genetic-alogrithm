@@ -272,7 +272,16 @@ function START(){
 	}
 
 	AVG();
-	
+
+	text=document.getElementById("FACTOR").innerHTML;
+	text+="[ ";
+	for (var i = 0; i < Factor.length; i++) {
+		text+=Factor[i];
+		text+=",";
+	}
+	text+="]";
+	document.getElementById("FACTOR").innerHTML=text;
+
 	
 	text=document.getElementById("BESTFIT").innerHTML;
 	document.getElementById("BESTFIT").innerHTML=text+Best.fitness;
