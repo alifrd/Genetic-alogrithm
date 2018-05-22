@@ -5,7 +5,6 @@
 		<meta charset="UTF-8">
 	
 		<link rel="stylesheet" type="text/css" href="style/main.css">
-		<script type="text/javascript" src="js/classes.js"></script>
 	
 	</head>
 	
@@ -15,12 +14,42 @@
 		<header>
 			<h2>genetic </h2>		
 		</header>
+
+		<script type="text/javascript" src="js/classes.js"></script>
+		
 		<!-- START MAIN -->
 		<main class="help">
-						
+				<form>
+					<br><br>
+					<input type="number" id="Generation" placeholder="Generation Number">
+					<input type="number" id="Chromosome" placeholder="Chromosome Number">
+					<input type="number" id="Gen" placeholder="Gen Number">
+					<input type="number" id="Mutaion" placeholder="Mutaion Rate">
+					<input type="number" id="Crossover" placeholder="Crossover Rate">
+					<input type="number" id="Elitism" placeholder="Elitism Rate">
+					<input type="number" id="RandPeriod" placeholder="Rand Period">
+					<input type="number" id="Tournoment" placeholder="Tournoment size">
+					<input class="click" id="submit" onclick="START()" value="submit">
+				</form>		
 		</main>
 		<!-- END MAIN-->
 
+		<br><br><br><br><br><br><br><br><br>
+		<br><br><br><br><br><br><br><br><br>
+		<br><br><br><br><br><br><br><br><br>
+
+		<div>
+			<p id="FACTOR">Factor : </p>
+			<p id="BESTFIT">Best Fitness :</p>
+			<p id="BESTGEN">Best Gens : <br> </p>
+			<br><br>
+			<p>*********************</p>		
+			<p>*********************</p>		
+			<p>*********************</p>		
+			<br><br>
+			
+			<p id="FITNESS">AVG : <br> </p>
+		</div>
 		
 		<footer>
 			<br><br><br><br><br><br><br><br><br><br><br><br>
