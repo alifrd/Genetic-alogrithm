@@ -1,0 +1,170 @@
+
+
+/*Start Font */
+@import url('https://fonts.googleapis.com/css?family=Pompiere');
+/*End Font */
+
+
+
+
+/* Start General */
+html{
+	width: 100%;
+	height: 100%;
+}
+*{
+	font-family: pompiere;
+	padding: 0px;
+	margin: 0px;
+	text-align: center;
+}
+body{
+
+	width: 100%;
+	height: 100%;
+	overflow: scroll;
+	background-color: #6f8586;
+}
+a{
+	color: #fae596;
+	text-decoration: none;
+	-webkit-transition: all .4s;
+	-o-transition: all .4s;
+	transition: all .4s;
+}
+a:hover{
+		color: snow;
+}
+a.active{
+	color: snow;
+	width: 100%;
+}
+
+header,footer{
+	display: block;
+}
+header{
+	color: black;
+	background-color: #70b6b9;
+	height: 10%;
+}
+header h2{
+	padding-top: 20px;
+}
+main{
+	display: block;
+	width: 100%;
+	font-size: 20px;
+}
+main.help > h4{
+	margin-right: 20px;
+}
+main.help > h5{
+	margin-right: 40px;
+}
+main h3{
+	margin-top: 1%;
+}
+/* End general */
+
+
+
+
+/* Start Form Style*/
+form{
+	width: 35%;
+	margin: 0% auto;
+	color: snow;
+	font-size: 18px;
+}
+form > h3{
+	margin-bottom: 2%;
+}
+form > input[type="radio"]{
+	display: inline-block;
+	margin: 5% 2% 0% 17%;
+	-webkit-transition: all .4s;
+	-o-transition: all .4s;
+	transition: all .4s;
+}
+form > input[type="radio"]:nth-child(0){
+	color: red;
+}
+form > input[type="number"]{
+	display: block;
+	margin: 0 auto;
+	width: 50%;
+	height: 8%;
+	font-size: 20px;
+	margin: 5px auto;
+	background-color: inherit;
+	border: 2px solid black;
+	border-radius: 5px;
+	-webkit-transition: all .4s;
+	-o-transition: all .4s;
+	transition: all .4s;
+}
+.button_style{
+	width: 40% !important;
+	height: 6% !important;
+}
+form > input[type="text"]{
+	display: inline-block;
+	margin: 0 auto;
+	width: 30%;
+	height: 8%;
+	font-size: 20px;
+	margin: 5px auto;
+	background-color: inherit;
+	border: 2px solid black;
+	border-radius: 5px;
+	margin-right: 5px;
+	-webkit-transition: all .4s;
+	-o-transition: all .4s;
+	transition: all .4s;
+}
+form > .click{
+	display: block;
+	margin: 0 auto;
+	color: black;
+	width: 20%;
+	height: 5%;
+	margin-top: 10px;
+	background-color: inherit;
+	border: 2px solid black;
+	border-radius: 5px;
+	-webkit-transition: all .4s;
+	-o-transition: all .4s;
+	transition: all .4s;
+
+}
+form > select{
+	background-color: transparent;
+	width: 15%;
+	font-size: 20px;
+}
+form > option{
+	background-color: transparent;
+	width: 5%;
+}
+form > .click:hover{
+	border-color: #b5992f;
+	color: #b5992f;
+	-webkit-transition: all .4s;
+	-o-transition: all .4s;
+	transition: all .4s;
+
+}
+*::placeholder { 
+    color: #c9d0cf;
+    opacity: 1; 
+}
+div{
+	width: 70%;
+	margin: 0 auto;
+}
+div > p{
+display: block;
+}
+/* End Form Style*/
+
