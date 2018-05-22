@@ -1,21 +1,40 @@
+
+/*
+//Test value
+var Rate_mutaion = 10;
+var Rate_crossover=20;
+var Rate_elitism= 10;
+var period = 10;
+var genetaration_number = 100;
+var number_gen = 5 ;
+var choromse_number = 10 ;
+var tournoment_size = 5;
+*/
+
+var Rate_mutaion ;
+var Rate_crossover;
+var Rate_elitism;
+var period;
+var genetaration_number;
+var number_gen;
+var choromse_number;
+var tournoment_size;
+
 //chromsome
 var Generation=[]
 var Chermosmes=[]
 var Factor=[]
+var slected_by_tournent = [];
+var Generation_AVG = [];
 var Best = {
 	gen : [] ,
 	fitness : 9999999999
 }
-var slected_by_tournent = [];
-var Rate_mutaion = 10;
-var Rate_crossover=20;
-
 
 //chromsome class 
 function Chermosme(){
 	this.gens = [];
 	this.fitness = [];
-	this.num = 0;
 	this.check = 0;
 	this.addgen = function(gen){
 		this.gens.push(gen);
@@ -38,8 +57,6 @@ function ChormoseBuilder(chrom_num,gen_num,min,max){
 	}
 }
 
-
-
 //build random factor
 function SetRandomFactor(num,min,max){
 	for (var i = 0; i < num; i++)
@@ -51,7 +68,7 @@ function GetFactor(fac){
 	Factor.push(fac);
 }
 
-
+//Calucate Fitness
 function CalucateFitness(){
 	var sum_fitness=0;
 	for (var i = 0; i < Chermosmes.length; i++) {
@@ -61,23 +78,31 @@ function CalucateFitness(){
 		Chermosmes[i].fitness = sum_fitness;
 		if (Math.abs(sum_fitness) < Math.abs(Best.fitness)  ) {
 			Best.fitness = sum_fitness;
+			Best.gen = [];
 			Best.gen = Chermosmes[i].gens.slice(0);
 		} 
 	}		
 }
 
-
+//Build Generation
 function GenerationBuild(){
 	Generation.push(Chermosmes);
-	
+	if (Generation.length != 1)
+		for (var i = 0; i < Generation[Generation.length - 2 ].length; i++)
+			if (!Generation[Generation.length - 2 ][i].check)
+				Generation[Generation.length - 1 ].push(Generation[Generation.length - 2 ][i])
+			
 	Clear();
 }
 
+//Clear Staged After Build Generation
 function Clear(){
 	Chermosmes=[];
 	choosen=[];
+	slected_by_tournent=[];
 }
 
+//Sort Choromsom by Fitness
 function SortbyFitness(Cherom){
 	Cherom.sort(function(obj1, obj2) {
 		// Ascending: first age less than the previous
@@ -86,9 +111,9 @@ function SortbyFitness(Cherom){
 	return Cherom;
 }
 
+//Elistim 
 function Elitism(percentage){
 	var selected_size = Math.floor(Generation[Generation.length -1].length*(percentage/100));
-	console.log(selected_size);
 	var lastgeretion = Generation.length;
 	var lastchrom=Generation[lastgeretion-1].slice(0);
 	var sortedchrom=SortbyFitness(lastchrom);
@@ -100,12 +125,13 @@ function Elitism(percentage){
 	}
 }
 
-
+//Just for test
 function CheckUnmark(){
-	for (var i = 0; i < Chermosmes.length; i++)
-			Chermosmes[i].check = 0;
+	for (var i = 0; i < Generation[Generation.length -1].length; i++)
+			Generation[Generation.length -1][i].check = 0;
 }
 
+//Mark Crossed Chromosome 
 function CheckMark(genetaration,chorm){
 
 	for (var i = 0; i < genetaration.length; i++)
@@ -116,6 +142,7 @@ function CheckMark(genetaration,chorm){
 	
 }
 
+//Selection(Tournoment)
 function SelectionTournament(slice){
 	var lastgeretion = Generation.length;
 	var sliced = [];
@@ -123,7 +150,9 @@ function SelectionTournament(slice){
 		
 		if (j>slice) {
 			var sortedsliced=SortbyFitness(sliced);
-			slected_by_tournent.push(sortedsliced[0]);	
+			slected_by_tournent.push(sortedsliced[0]);
+			updated_generation=CheckMark(Generation[lastgeretion-1],sortedsliced[0])
+			Generation[lastgeretion-1]=updated_generation;
 			sliced = [];
 			j=1;
 		}
@@ -132,12 +161,36 @@ function SelectionTournament(slice){
 	}
 	var sortedsliced=SortbyFitness(sliced);
 	slected_by_tournent.push(sortedsliced[0]);
-	updated_generation=CheckMark(Generation[lastgeretion-1],sortedsliced[0])
-	Generation[lastgeretion-1]=updated_generation;
-		
-		
+			
 }
 
 
+//Crossed Two Chromosme 
+function Crossed(parent_one,parent_two){
+	var pointer = getRandom(1,Factor.length);
+	var children
+	//slice
+	var slice_one_parent_one=parent_one.gens.slice(0,pointer);
+	var slice_two_parent_one=parent_one.gens.slice(pointer,parent_one.length);
+	var slice_one_parent_two=parent_two.gens.slice(0,pointer);
+	var slice_two_parent_two=parent_two.gens.slice(pointer,parent_two.length);
+	//concnat
+	var child_one_gen=slice_one_parent_one.concat(slice_two_parent_two);
+	var child_two_gen=slice_one_parent_two.concat(slice_two_parent_one);
+	
+		 
+	parent_one.gens=child_one_gen;
+	parent_two.gens=child_two_gen;
 
 
+	return [parent_one,parent_two]
+}
+
+//Build Rand Rate
+function RateRand(percentage){
+	var Rand = getRandom(0,100);
+	if (percentage > Rand)
+		return true;
+	else
+		return false;
+}
