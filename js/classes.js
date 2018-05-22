@@ -195,7 +195,6 @@ function RateRand(percentage){
 		return false;
 }
 
-
 //Cross Over Selection
 function CrossOver(){
 	var parent_one ;
@@ -236,6 +235,73 @@ function AVG(){
 	}
 
 }
+
+
+
+
+// Run Function
+function START(){
+
+	
+	 Rate_mutaion = document.getElementById("Mutaion").value ;
+	 Rate_crossover=document.getElementById("Crossover").value;
+	 Rate_elitism=document.getElementById("Elitism").value;
+	 period = document.getElementById("RandPeriod").value;
+	 genetaration_number = document.getElementById("Generation").value;
+	 number_gen = document.getElementById("Gen").value;
+	 choromse_number = document.getElementById("Chromosome").value;
+	 tournoment_size = document.getElementById("Tournoment").value;
+	
+
+				
+		
+	SetRandomFactor(number_gen,-period,period);
+	ChormoseBuilder(choromse_number,number_gen,-period,period); //(chromsome number , gen number , min gen number , max gen number)
+	CalucateFitness();
+	GenerationBuild();
+
+	for (var i = 0; i < genetaration_number; i++) {
+		Elitism(Rate_elitism);	
+		SelectionTournament(tournoment_size);		
+		CrossOver();
+		CalucateFitness();
+		GenerationBuild();
+		if (Best.fitness == 0)
+			break;
+		CheckUnmark();	
+	}
+
+	AVG();
+	
+	
+	text=document.getElementById("BESTFIT").innerHTML;
+	document.getElementById("BESTFIT").innerHTML=text+Best.fitness;
+	
+	text=document.getElementById("BESTGEN").innerHTML;
+	text+="[ ";
+	for (var i = 0; i < Best.gen.length; i++) {
+		text+=Best.gen[i];
+		text+=",";
+	}
+	text+="]";
+	
+	document.getElementById("BESTGEN").innerHTML=text;
+	text=document.getElementById("FITNESS").innerHTML;
+	text+="[ ";
+	for (var i = 0; i < Generation_AVG.length; i++) {
+		text+=Generation_AVG[i];
+		text+="<br>";
+	}
+	text+="]";
+	
+	document.getElementById("FITNESS").innerHTML=text;
+	window.scrollBy(0, 900);
+	
+}
+
+
+START();
+
 
 
 
