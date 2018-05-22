@@ -194,3 +194,48 @@ function RateRand(percentage){
 	else
 		return false;
 }
+
+
+//Cross Over Selection
+function CrossOver(){
+	var parent_one ;
+	var parent_two ;
+	var children;
+	for (var i = 0; i < slected_by_tournent.length; i++) {
+		if (i%2==1 ) {
+		  parent_one = Object.assign({}, slected_by_tournent[i-1]) ;
+		  parent_two = Object.assign({}, slected_by_tournent[i]);
+	
+	
+		 children = Crossed(parent_one,parent_two);	 
+		 if (RateRand(Rate_mutaion))
+		 	children[0]=Mutaion(children[0]);	
+		 if (RateRand(Rate_mutaion))
+		 	children[1]=Mutaion(children[1]);
+		 Chermosmes.push(children[0]);
+		 Chermosmes.push(children[1]);
+		}
+	}
+}
+
+// Mutation
+function Mutaion(child){
+	var pointer = getRandom(0,Factor.length);
+	child.gens[pointer]=getRandom(-10,10);
+	return child;
+}
+
+// Avarage Of Generation
+function AVG(){
+	var sum=0
+	for (var i = 0; i < Generation.length  ; i++) {
+		sum=0;
+		for (var j = 0; j < Generation[i].length; j++)
+			sum += Generation[i][j].fitness;	
+		Generation_AVG.push(sum/Generation[i].length) 
+	}
+
+}
+
+
+
