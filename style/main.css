@@ -16,6 +16,7 @@ html{
 	font-family: pompiere;
 	padding: 0px;
 	margin: 0px;
+	text-align: center;
 }
 body{
 
@@ -38,12 +39,8 @@ a.active{
 	color: snow;
 	width: 100%;
 }
-p,h3,h4,h5,h5{
-	text-align: right;
-}
 
 header,footer{
-	text-align: center;
 	display: block;
 }
 header{
@@ -57,7 +54,6 @@ header h2{
 main{
 	display: block;
 	width: 100%;
-	background-color: #676f73;
 	font-size: 20px;
 }
 main.help > h4{
@@ -82,13 +78,11 @@ form{
 	font-size: 18px;
 }
 form > h3{
-	text-align: center;
 	margin-bottom: 2%;
 }
 form > input[type="radio"]{
 	display: inline-block;
 	margin: 5% 2% 0% 17%;
-	text-align: center;
 	-webkit-transition: all .4s;
 	-o-transition: all .4s;
 	transition: all .4s;
@@ -106,7 +100,6 @@ form > input[type="number"]{
 	background-color: inherit;
 	border: 2px solid black;
 	border-radius: 5px;
-	text-align: center;
 	-webkit-transition: all .4s;
 	-o-transition: all .4s;
 	transition: all .4s;
@@ -125,13 +118,12 @@ form > input[type="text"]{
 	background-color: inherit;
 	border: 2px solid black;
 	border-radius: 5px;
-	text-align: center;
 	margin-right: 5px;
 	-webkit-transition: all .4s;
 	-o-transition: all .4s;
 	transition: all .4s;
 }
-form > input[type="submit"]{
+form > .click{
 	display: block;
 	margin: 0 auto;
 	color: black;
@@ -141,7 +133,6 @@ form > input[type="submit"]{
 	background-color: inherit;
 	border: 2px solid black;
 	border-radius: 5px;
-	text-align: center;	
 	-webkit-transition: all .4s;
 	-o-transition: all .4s;
 	transition: all .4s;
@@ -156,7 +147,7 @@ form > option{
 	background-color: transparent;
 	width: 5%;
 }
-form > input[type="submit"]:hover{
+form > .click:hover{
 	border-color: #b5992f;
 	color: #b5992f;
 	-webkit-transition: all .4s;
@@ -167,6 +158,13 @@ form > input[type="submit"]:hover{
 *::placeholder { 
     color: #c9d0cf;
     opacity: 1; 
+}
+div{
+	width: 70%;
+	margin: 0 auto;
+}
+div > p{
+display: block;
 }
 /* End Form Style*/
 
