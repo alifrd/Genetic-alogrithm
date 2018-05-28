@@ -1,14 +1,16 @@
 
-/*
+
 //Test value
+/*
 var Rate_mutaion = 10;
 var Rate_crossover=20;
 var Rate_elitism= 10;
-var period = 10;
+var period = 100;
 var genetaration_number = 100;
 var number_gen = 5 ;
 var choromse_number = 10 ;
 var tournoment_size = 5;
+var tournoment_duration = genetaration_number/5;
 */
 
 var Rate_mutaion ;
@@ -19,6 +21,7 @@ var genetaration_number;
 var number_gen;
 var choromse_number;
 var tournoment_size;
+var tournoment_duration ;
 
 //chromsome
 var Generation=[]
@@ -35,7 +38,6 @@ var Best = {
 function Chermosme(){
 	this.gens = [];
 	this.fitness = [];
-	this.check = 0;
 	this.addgen = function(gen){
 		this.gens.push(gen);
 		this.num++;
@@ -89,7 +91,6 @@ function GenerationBuild(){
 	Generation.push(Chermosmes);
 	if (Generation.length != 1)
 		for (var i = 0; i < Generation[Generation.length - 2 ].length; i++)
-			if (!Generation[Generation.length - 2 ][i].check)
 				Generation[Generation.length - 1 ].push(Generation[Generation.length - 2 ][i])
 			
 	Clear();
@@ -118,27 +119,8 @@ function Elitism(percentage){
 	var lastchrom=Generation[lastgeretion-1].slice(0);
 	var sortedchrom=SortbyFitness(lastchrom);
 	var updated_generation
-	for (var i = 0 ; i < selected_size ; i++) {
+	for (var i = 0 ; i < selected_size ; i++)
 		Chermosmes.push(sortedchrom[i]);
-		updated_generation=CheckMark(Generation[lastgeretion-1],sortedchrom[i])
-		Generation[lastgeretion-1]=updated_generation;
-	}
-}
-
-//Just for test
-function CheckUnmark(){
-	for (var i = 0; i < Generation[Generation.length -1].length; i++)
-			Generation[Generation.length -1][i].check = 0;
-}
-
-//Mark Crossed Chromosome 
-function CheckMark(genetaration,chorm){
-
-	for (var i = 0; i < genetaration.length; i++)
-		if (genetaration[i].gens ===chorm.gens)
-			genetaration[i].check = 1;
-			
-	return genetaration
 	
 }
 
@@ -146,22 +128,14 @@ function CheckMark(genetaration,chorm){
 function SelectionTournament(slice){
 	var lastgeretion = Generation.length;
 	var sliced = [];
-	for (var i = 0 , j=1 ; i < Generation[lastgeretion-1].length; i++) {
-		
-		if (j>slice) {
-			var sortedsliced=SortbyFitness(sliced);
-			slected_by_tournent.push(sortedsliced[0]);
-			updated_generation=CheckMark(Generation[lastgeretion-1],sortedsliced[0])
-			Generation[lastgeretion-1]=updated_generation;
-			sliced = [];
-			j=1;
+	for (var j = 0; j < tournoment_duration; j++) {
+		for (var i = 0 ; i < tournoment_size ; i++) {
+			var Rand =  getRandom(0,Generation[lastgeretion-1].length)
+			sliced.push(Generation[lastgeretion-1][Rand])
 		}
-		sliced.push(Generation[lastgeretion-1][i]);
-		j++;
-	}
-	var sortedsliced=SortbyFitness(sliced);
-	slected_by_tournent.push(sortedsliced[0]);
-			
+		var sortedsliced=SortbyFitness(sliced);
+		slected_by_tournent.push(sortedsliced[0]);
+	}		
 }
 
 
@@ -202,6 +176,7 @@ function CrossOver(){
 	var children;
 	for (var i = 0; i < slected_by_tournent.length; i++) {
 		if (i%2==1 ) {
+		  
 		  parent_one = Object.assign({}, slected_by_tournent[i-1]) ;
 		  parent_two = Object.assign({}, slected_by_tournent[i]);
 	
@@ -220,7 +195,7 @@ function CrossOver(){
 // Mutation
 function Mutaion(child){
 	var pointer = getRandom(0,Factor.length);
-	child.gens[pointer]=getRandom(-10,10);
+	child.gens[pointer]=getRandom(-period,period);
 	return child;
 }
 
@@ -242,7 +217,7 @@ function AVG(){
 // Run Function
 function START(){
 
-	
+		
 	 Rate_mutaion = document.getElementById("Mutaion").value ;
 	 Rate_crossover=document.getElementById("Crossover").value;
 	 Rate_elitism=document.getElementById("Elitism").value;
@@ -251,7 +226,7 @@ function START(){
 	 number_gen = document.getElementById("Gen").value;
 	 choromse_number = document.getElementById("Chromosome").value;
 	 tournoment_size = document.getElementById("Tournoment").value;
-	
+	 tournoment_duration = genetaration_number/5;
 
 				
 		
@@ -262,17 +237,20 @@ function START(){
 
 	for (var i = 0; i < genetaration_number; i++) {
 		Elitism(Rate_elitism);	
-		SelectionTournament(tournoment_size);		
+		SelectionTournament(tournoment_size);	
+	
 		CrossOver();
 		CalucateFitness();
 		GenerationBuild();
 		if (Best.fitness == 0)
 			break;
-		CheckUnmark();	
 	}
 
 	AVG();
-
+	
+	console.log(Generation_AVG);
+	console.log(Best)
+	
 	text=document.getElementById("FACTOR").innerHTML;
 	text+="[ ";
 	for (var i = 0; i < Factor.length; i++) {
@@ -282,7 +260,7 @@ function START(){
 	text+="]";
 	document.getElementById("FACTOR").innerHTML=text;
 
-	
+
 	text=document.getElementById("BESTFIT").innerHTML;
 	document.getElementById("BESTFIT").innerHTML=text+Best.fitness;
 	
@@ -293,8 +271,8 @@ function START(){
 		text+=",";
 	}
 	text+="]";
-	
 	document.getElementById("BESTGEN").innerHTML=text;
+	
 	text=document.getElementById("FITNESS").innerHTML;
 	text+="[ ";
 	for (var i = 0; i < Generation_AVG.length; i++) {
@@ -305,7 +283,7 @@ function START(){
 	
 	document.getElementById("FITNESS").innerHTML=text;
 	window.scrollBy(0, 900);
-	
+
 }
 
 
